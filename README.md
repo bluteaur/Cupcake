@@ -5,7 +5,6 @@ Edit/Add any ideas here:
 index.php:
 
   This is the first page to be seen, so it should be the login page.
-   -- STEPS (TOP TO BOTTOM) OF PAGE LAYOUT:
 
 
   1. Check post to see if a user logged in/signed up
