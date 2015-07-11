@@ -17,8 +17,6 @@ index.php:
    - Show two buttons, one for login and one for signup
   4. When the information is sent
    - Use a post method with action "index.php"
-
-
     More steps if wanted
   5. Validate username/password with JavaScript/PHP
    - Javascript will cut down amount of page loads so..
