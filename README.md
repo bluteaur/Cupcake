@@ -19,7 +19,7 @@ index.php:
    - Use a post method with action "index.php"
 
 
-More steps if wanted
+    More steps if wanted
   5. Validate username/password with JavaScript/PHP
    - Javascript will cut down amount of page loads so..
 
