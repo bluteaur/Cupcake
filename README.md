@@ -6,6 +6,7 @@ index.php:
 
   This is the first page to be seen, so it should be the login page.
    - STEPS (TOP TO BOTTOM) OF PAGE LAYOUT:
+
   1. Check post to see if a user logged in/signed up
    - signup: create account with database then:
    - login: create session for user and go to step 2
