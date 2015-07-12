@@ -4,8 +4,8 @@
   /* code that'll check $_POST['signup'] 
                   add information to database (username + password)
                   check if everything is valid
-                        if not then print error message
-                  set session['signup'] = true
+                        if not then print error message 
+                        else set session['signup'] = true
   */
 
 ?>
