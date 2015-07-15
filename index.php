@@ -10,11 +10,46 @@
   */
   $UserNameMatch = true;
   $PasswordMatch = true;
+  $error = false;
   if(isset($_POST['signup'])){
-    //check data and set UserNameMatch and PasswordMatch
-    //put info in database
-    //check database errors
-    $_SESSION['signup'] = true;
+      //setting up database access
+    try{
+      if($_SESSION['signup'] === true)
+        throw new Exception('Already signed up, try again later.');
+      $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'CUPCAKE', '1234567890');
+        //error handeling mode to exception handeling
+      $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //getting all users with that username
+      $sql = $con->prepare("SELECT * FROM access WHERE username = :username");
+        //checking for invalid characters. Allowed: (letters, digits, dashes)
+      $tempName = preg_replace('/[^A-Za-z0-9\-]/', '', $_POST['username']);
+        //if a character got replaced than we'll throw an exception
+      if($tempName !== $_POST['username'])
+        throw new Exception('Invalid Username.');
+      $sql->bindParam(':username', $tempName);
+    	$sql->execute();
+    	$values= $sql->fetchAll();
+    	  //if we found a user with that username then throw exception
+    	if($value['username'][0] === $_POST['username'])
+    	  throw new Exception('Username Taken.');
+    	    //here the user is safe to register
+    	    //hashing + salting password
+    	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
+    	$password = hash('md5', $password);
+    	$admin = 0; //not an admin
+    	  //adding user to access table
+      $sql = $con->prepare("INSERT INTO access VALUES (:username, :password, :admin)");
+      $sql->bindParam(':username', $_POST['username']);
+      $sql->bindParam(':password', $password);
+      $sql->bindParam(':admin', $admin);
+    	$sql->execute();
+    	$_SESSION['signup'] = true; //To know that we signed up
+    	$_SESSION['login'] = false; //not logged in yet
+    }
+    catch(Exception $e) {
+      $error = true;
+      $errorMessage = $e->getMessage();
+    }
   }
 
 ?>
@@ -24,7 +59,7 @@
                   set $_SESSION['login'] = true
                   set $_SESSION['username'] = $_POST['username']
   */
-  if($_SESSION['signup'] === true || isset($_POST['login'])){
+  if(($_SESSION['signup'] === true || isset($_POST['login'])) && !$error){
     //get username + password from database
     //match username + password to an account and set variables below
     $UserNameMatch = false;
