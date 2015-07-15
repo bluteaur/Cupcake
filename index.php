@@ -28,7 +28,7 @@
         throw new Exception('Invalid Username.');
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
-    	$values= $sql->fetchAll();
+    	$value= $sql->fetchAll();
     	  //if we found a user with that username then throw exception
     	if($value['username'][0] === $_POST['username'])
     	  throw new Exception('Username Taken.');
@@ -44,11 +44,14 @@
       $sql->bindParam(':admin', $admin);
     	$sql->execute();
     	$_SESSION['signup'] = true; //To know that we signed up
+      $_SESSION['signup2'] = true;
     	$_SESSION['login'] = false; //not logged in yet
+    	$con = null;
     }
     catch(Exception $e) {
       $error = true;
       $errorMessage = $e->getMessage();
+      $con = null;
     }
   }
 
@@ -59,20 +62,54 @@
                   set $_SESSION['login'] = true
                   set $_SESSION['username'] = $_POST['username']
   */
-  if(($_SESSION['signup'] === true || isset($_POST['login'])) && !$error){
-    //get username + password from database
-    //match username + password to an account and set variables below
-    $UserNameMatch = false;
-    $PasswordMatch = false;
-    if($match){
+  if(($_SESSION['signup2'] === true || isset($_POST['login'])) && !$error){
+    $_SESSION['login'] = false; $_SESSION['signup2'] = false;
+    try{
+      if($_SESSION['attemps'] > 5)
+        throw new Exception('Too many attemps, try again later.');
+      $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'CUPCAKE', '1234567890');
+        //error handeling mode to exception handeling
+      $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $sql = $con->prepare("SELECT * FROM access WHERE username = :username");
+        //checking for invalid characters. Allowed: (letters, digits, dashes)
+      $tempName = preg_replace('/[^A-Za-z0-9\-]/', '', $_POST['username']);
+        //if a character got replaced than we'll throw an exception
+      if($tempName !== $_POST['username']){
+         $UserNameMatch = false;
+        throw new Exception('Invalid Username.');
+      }
+      $sql->bindParam(':username', $tempName);
+    	$sql->execute();
+    	$value= $sql->fetchAll();
+    	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
+    	$password = hash('md5', $password);
+    	if($password !== $value['password'][0] || $_POST['username'] !== $value['username'][0]){
+    	  $UserNameMatch = false;
+        $PasswordMatch = false;
+        throw new Exception('Invalid Login.');
+    	}
+      $UserNameMatch = true;
+      $PasswordMatch = true;
       $_SESSION['login'] = true;
         //look in database and see if user is an admin
-      $_SESSION['admin'] = false; //admin creation
+      if($value['admin'][0] === 1)
+        $_SESSION['admin'] = true;
+      else
+        $_SESSION['admin'] = false; 
         //here we will gather any additionnal information needed from database
-      $_SESSION['username'] = $_POST['username'];
-    } else {
+      $_SESSION['username'] = $value['username'][0];
+      $con = null;
+    }
+    catch(Exception $e) {
       $_SESSION['login'] = false;
       $_SESSION['admin'] = false;
+      $error = true;
+      $errorMessage = $e->getMessage();
+      $con = null;
+      if(!isset($_SESSION['attempts']))
+        $_SESSION['attempts'] = 0;
+      if($_SESSION['attemps'] <= 5)
+        $_SESSION['attemps']++;
     }
   }
 
@@ -94,6 +131,41 @@
 <html>
   <head>
     <title>Cupcake Messaging Login</title>
+    <!-- java script to check validations goes here -->
+    <script>
+      function validateForm() {
+        var x = document.forms["validate"]["username"].value;
+        var y = document.forms["validate"]["password"].value;
+        var x2 = x.length;
+        var y2 = y.length;
+        if (x == null || x == "" || y == null || y == "") {
+          alert("Username and password must be filled out");
+          return false;
+        }
+        if(x2 < 8 || y2 < 6){
+          alert("Username or password too short.");
+          return false;
+        }
+        var temp = x.replace(/ |\n|\r|\t|\s/, "");
+        var temp = temp.replace(/[^a-zA-Z0-9\-]/, "")
+        if(temp.localeCompare(x) != 0){
+          alert("Username has invalid characters, use a-z A-Z 0-9 or '-'.");
+          return false;
+        }
+        if(y.search(/[A-Z]/) == -1){
+          alert("Password must contain a capital letter.");
+          return false;
+        }
+        if(y.search(/[0-9]/) == -1){
+          alert("Password must contain a digit.");
+          return false;
+        }
+        if(y.search(/[a-z]/) == -1){
+          alert("Password must contain a lowercase letter.");
+          return false;
+        }
+        return true;
+    </script>
   </head>
   <body>
     <?php
@@ -105,7 +177,7 @@
     FROM BUTTONS    $_POST['login']   or  $_POST['signup']
       */
   echo '<div>';
-  echo '<form action="index.php" method="post">';
+  echo '<form action="index.php" method="post" onsubmit="return validateForm()" name="validate">';
 if(!$UserNameMatch)
   echo '<span style = "font-color:red">';
   echo 'Username: ';
@@ -126,5 +198,3 @@ if(!$PasswordMatch)
     ?>
   </body>
 </html>
-
-<!-- java script to check validations goes here -->
