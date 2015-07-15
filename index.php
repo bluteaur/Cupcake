@@ -177,7 +177,7 @@
     FROM BUTTONS    $_POST['login']   or  $_POST['signup']
       */
   echo '<div>';
-  echo '<form action="index.php" method="post" onsubmit="return validateForm()" name="validate">';
+  echo '<form action="index.php" method="post" name="validate">';
 if(!$UserNameMatch)
   echo '<span style = "font-color:red">';
   echo 'Username: ';
@@ -190,7 +190,7 @@ if(!$PasswordMatch)
 if(!$PasswordMatch)
   echo '*<\span>';
   echo '<input type="password" name="password" autocomplete="off"> <br>';
-  echo '<input type="submit" name="signup" value="Signup">';
+  echo '<input type="submit" name="signup" value="Signup" onclick="validateForm()">';
   echo '<input type="submit" name="login" value="Login">';
   echo '</form>';
   echo '</div>';
