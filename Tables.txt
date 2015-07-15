@@ -5,6 +5,7 @@
 CREATE TABLE access (
   id INTEGER NOT NULL AUTO_INCREMENT,
   username varchar(64),
-  password vatchar(128) NOT NULL,
+  password varchar(128) NOT NULL,
+  admin TINYINT(1) NOT NULL,
   PRIMARY KEY (username)
 )ENGINE=InnoDB;
