@@ -168,6 +168,7 @@
           return false;
         }
         return true;
+      }
     </script>
   </head>
   <body>
@@ -185,15 +186,15 @@ if(!$UserNameMatch)
   echo '<span id="invalid">';
   echo 'Username: ';
 if(!$UserNameMatch)
-  echo '*<\span>';
+  echo '*</span>';
   echo '<input type="text" name="username"> <br>';
 if(!$PasswordMatch)
   echo '<span id="invalid">';
   echo 'Password: ';
 if(!$PasswordMatch)
-  echo '*<\span>';
+  echo '*</span>';
   echo '<input type="password" name="password" autocomplete="off"> <br>';
-  echo '<input type="submit" name="signup" value="Signup" onclick="validateForm()">';
+  echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
   echo '<input type="submit" name="login" value="Login">';
   echo '</form>';
   echo '</div>';
