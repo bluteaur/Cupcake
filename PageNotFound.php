@@ -10,8 +10,11 @@
     <div id="LoginForm">I think you don't belong here so.. Let me MEOW at you :3 
     <a href="index.php">Click Here To Escape!</a>
     <?php
-      for($i = 0; $i < 20; $i++)
-        echo '<span id="invalid">MENOW</span>';
+      echo '<br />';
+      for($i = 0; $i < 100; $i++){
+        echo '<span id="invalid">MENOW! </span>';
+        if($i+1 % 10 == 0) echo '<br />';
+      }
     ?>
     </div>
   </body>
