@@ -16,7 +16,7 @@
     try{
       if($_SESSION['signup'] === true)
         throw new Exception('Already signed up, try again later.');
-      $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'CUPCAKE', '1234567890');
+      $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'bluteaur_CUPCAKE', 'Sup3rS3cr3tPassword');
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //getting all users with that username
@@ -67,7 +67,7 @@
     try{
       if($_SESSION['attemps'] > 5)
         throw new Exception('Too many attemps, try again later.');
-      $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'CUPCAKE', '1234567890');
+      $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'bluteaur_CUPCAKE', 'Sup3rS3cr3tPassword');
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $sql = $con->prepare("SELECT * FROM access WHERE username = :username");
