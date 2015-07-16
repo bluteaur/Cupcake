@@ -38,7 +38,7 @@
     	$password = hash('md5', $password);
     	$admin = 0; //not an admin
     	  //adding user to access table
-      $sql = $con->prepare("INSERT INTO access VALUES (:username, :password, :admin)");
+      $sql = $con->prepare("INSERT INTO access VALUES (null, :username, :password, :admin)");
       $sql->bindParam(':username', $_POST['username']);
       $sql->bindParam(':password', $password);
       $sql->bindParam(':admin', $admin);
