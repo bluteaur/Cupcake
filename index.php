@@ -29,9 +29,6 @@
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
     	$value= $sql->fetchAll();
-        if($value == null){
-            throw new Exception('Something went wrong.');
-        }
     	  //if we found a user with that username then throw exception
     	if($value[0][1] === $_POST['username'])
     	  throw new Exception('Username Taken.');
@@ -83,6 +80,9 @@
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
     	$value= $sql->fetchAll();
+      if($value == null){
+        throw new Exception('Something went wrong.');
+      }
     	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
     	$password = hash('md5', $password);
     	if($password != $value[0][2] || $_POST['username'] != $value[0][1]){
