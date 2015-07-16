@@ -64,8 +64,8 @@
   if(($_SESSION['signup2'] === true || isset($_POST['login'])) && !$error){
     $_SESSION['login'] = false; $_SESSION['signup2'] = false;
     try{
-      //if($_SESSION['attemps'] > 20)
-      //  throw new Exception('Too many attemps, try again later.');
+      if($_SESSION['attemps'] > 20)
+        throw new Exception('Too many attemps, try again later.');
       $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'bluteaur_CUPCAKE', 'Sup3rS3cr3tPassword');
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
