@@ -29,8 +29,11 @@
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
     	$value= $sql->fetchAll();
+        if($value == null){
+            throw new Exception('Something went wrong.');
+        }
     	  //if we found a user with that username then throw exception
-    	if($value['username'][0] === $_POST['username'])
+    	if($value[0][1] === $_POST['username'])
     	  throw new Exception('Username Taken.');
     	    //here the user is safe to register
     	    //hashing + salting password
@@ -54,7 +57,6 @@
       $con = null;
     }
   }
-
 ?>
 
 <?php
@@ -65,8 +67,8 @@
   if(($_SESSION['signup2'] === true || isset($_POST['login'])) && !$error){
     $_SESSION['login'] = false; $_SESSION['signup2'] = false;
     try{
-      if($_SESSION['attemps'] > 5)
-        throw new Exception('Too many attemps, try again later.');
+      //if($_SESSION['attemps'] > 20)
+      //  throw new Exception('Too many attemps, try again later.');
       $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'bluteaur_CUPCAKE', 'Sup3rS3cr3tPassword');
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -83,21 +85,21 @@
     	$value= $sql->fetchAll();
     	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
     	$password = hash('md5', $password);
-    	if($password != $value['password'][0] || $_POST['username'] != $value['username'][0]){
+    	if($password != $value[0][2] || $_POST['username'] != $value[0][1]){
     	  $UserNameMatch = false;
-        $PasswordMatch = false;
-        throw new Exception('Invalid Login.');
+          $PasswordMatch = false;
+          throw new Exception('Invalid Login.');
     	}
       $UserNameMatch = true;
       $PasswordMatch = true;
       $_SESSION['login'] = true;
         //look in database and see if user is an admin
-      if($value['admin'][0] === 1)
+      if($value[0][3] === 1)
         $_SESSION['admin'] = true;
       else
         $_SESSION['admin'] = false; 
         //here we will gather any additionnal information needed from database
-      $_SESSION['username'] = $value['username'][0];
+      $_SESSION['username'] = $value[0][1];
       $con = null;
     }
     catch(Exception $e) {
@@ -108,11 +110,10 @@
       $con = null;
       if(!isset($_SESSION['attempts']))
         $_SESSION['attempts'] = 0;
-      if($_SESSION['attemps'] <= 5)
+      if($_SESSION['attemps'] <= 20)
         $_SESSION['attemps']++;
     }
   }
-
 ?>
 
 <?php
@@ -181,6 +182,8 @@
     FROM BUTTONS    $_POST['login']   or  $_POST['signup']
       */
   echo '<div id="LoginForm">';
+  if($error === true)
+     echo $errorMessage;
   echo '<form action="index.php" method="post" name="validate">';
 if(!$UserNameMatch)
   echo '<span id="invalid">';
@@ -198,7 +201,6 @@ if(!$PasswordMatch)
   echo '<input type="submit" name="login" value="Login">';
   echo '</form>';
   echo '</div>';
-
     ?>
   </body>
 </html>
