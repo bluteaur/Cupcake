@@ -131,6 +131,9 @@
 <html>
   <head>
     <title>Cupcake Messaging Login</title>
+    <link rel="stylesheet" type="text/css" href="cupcake.css">
+    <meta name="Cupcake Messaging" content="Your messaging site!">
+    <meta name="Cupcake Messaging" content="We don't sell your information. You have control.">
     <!-- java script to check validations goes here -->
     <script>
       function validateForm() {
@@ -176,16 +179,16 @@
                     $_POST['password']
     FROM BUTTONS    $_POST['login']   or  $_POST['signup']
       */
-  echo '<div>';
+  echo '<div id="LoginForm">';
   echo '<form action="index.php" method="post" name="validate">';
 if(!$UserNameMatch)
-  echo '<span style = "font-color:red">';
+  echo '<span id="invalid">';
   echo 'Username: ';
 if(!$UserNameMatch)
   echo '*<\span>';
   echo '<input type="text" name="username"> <br>';
 if(!$PasswordMatch)
-  echo '<span style = "font-color:red">';
+  echo '<span id="invalid">';
   echo 'Password: ';
 if(!$PasswordMatch)
   echo '*<\span>';
