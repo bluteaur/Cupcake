@@ -11,12 +11,25 @@ body {
 
 #LoginForm {
   margin-top:30vh;
-  text-align: center;
+  text-align: left;
+  margin-left:35vw;
   font-size:1.4em;
   font-color:black;
 }
 
 #input {
-  margin-left:5em;
+  display:inline-block;
+  width:200px;
+  margin-right:15px;
+  text-align:right;
+  color:#000000;
+}
+
+#button {
+  margin-left:10vw;
+}
+
+#padding {
+  color:black;
 }
 
