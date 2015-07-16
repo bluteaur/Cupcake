@@ -6,11 +6,13 @@ body {
 }
 /* Inside of index.php */
 #invalid {
- font-color:red; 
+ color:red; 
 }
 
 #LoginForm {
-  font-size:2em;
+  margin-top:30vh;
+  text-align: center;
+  font-size:1.4em;
   font-color:black;
 }
 
