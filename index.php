@@ -80,9 +80,9 @@
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
     	$value= $sql->fetchAll();
-      if($value == null){
-        throw new Exception('Something went wrong.');
-      }
+        if($value == null){
+            throw new Exception('Something went wrong.');
+        }
     	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
     	$password = hash('md5', $password);
     	if($password != $value[0][2] || $_POST['username'] != $value[0][1]){
@@ -135,6 +135,7 @@
     <link rel="stylesheet" type="text/css" href="cupcake.css">
     <meta name="Cupcake Messaging" content="Your messaging site!">
     <meta name="Cupcake Messaging" content="We don't sell your information. You have control.">
+    <meta charset="UTF-8">
     <!-- java script to check validations goes here -->
     <script>
       function validateForm() {
@@ -185,19 +186,23 @@
   if($error === true)
      echo $errorMessage;
   echo '<form action="index.php" method="post" name="validate">';
+  echo '<input type="text" name="username" id="input"> ';
 if(!$UserNameMatch)
   echo '<span id="invalid">';
-  echo 'Username: ';
+else echo '<span id="padding">';
+  echo 'Username';
 if(!$UserNameMatch)
-  echo '*</span>';
-  echo '<input type="text" name="username" id="input"> <br>';
+  echo '*';
+  echo '</span><br />';
+  echo '<input type="password" name="password" autocomplete="off" id="input"> ';
 if(!$PasswordMatch)
   echo '<span id="invalid">';
-  echo 'Password: ';
+else echo '<span id="padding">';
+  echo 'Password';
 if(!$PasswordMatch)
-  echo '*</span>';
-  echo '<input type="password" name="password" autocomplete="off" id="input"> <br>';
-  echo '<input type="submit" name="login" value="Login">';
+  echo '*';
+  echo '</span><br />';
+  echo '<input type="submit" name="login" value="Login" id="button">';
   echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
   echo '</form>';
   echo '</div>';
