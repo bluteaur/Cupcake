@@ -83,7 +83,7 @@
     	$value= $sql->fetchAll();
     	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
     	$password = hash('md5', $password);
-    	if($password !== $value['password'][0] || $_POST['username'] !== $value['username'][0]){
+    	if($password != $value['password'][0] || $_POST['username'] != $value['username'][0]){
     	  $UserNameMatch = false;
         $PasswordMatch = false;
         throw new Exception('Invalid Login.');
