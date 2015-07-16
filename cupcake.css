@@ -4,9 +4,13 @@ body {
   font-family: Helvetica, "Times New Roman";
   background-color: #AAAAFF;
 }
-
-
+/* Inside of index.php */
 #invalid {
  font-color:red; 
+}
+
+#LoginForm {
+  font-size:2em;
+  font-color:black;
 }
 
