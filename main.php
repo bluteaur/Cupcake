@@ -1,7 +1,7 @@
 <?php
 session_start();
-if($_SESSION['login'] == false){
- echo "You're not logged in!";
+if($_SESSION['login'] == false || !isset($_SESSION['login'])){
+ header('Location: PageNotFound.php');
  exit;
 }
 ?>
