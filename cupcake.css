@@ -1,1 +1,12 @@
-/* Styles here.. ;-; none yet */
+body {
+  width: 100%;
+  margin: 0 auto;
+  font-family: Helvetica, "Times New Roman";
+  background-color: #AAAAFF;
+}
+
+
+#invalid {
+ font-color:red; 
+}
+
