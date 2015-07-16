@@ -190,15 +190,15 @@ if(!$UserNameMatch)
   echo 'Username: ';
 if(!$UserNameMatch)
   echo '*</span>';
-  echo '<input type="text" name="username"> <br>';
+  echo '<input type="text" name="username" id="input"> <br>';
 if(!$PasswordMatch)
   echo '<span id="invalid">';
   echo 'Password: ';
 if(!$PasswordMatch)
   echo '*</span>';
-  echo '<input type="password" name="password" autocomplete="off"> <br>';
-  echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
+  echo '<input type="password" name="password" autocomplete="off" id="input"> <br>';
   echo '<input type="submit" name="login" value="Login">';
+  echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
   echo '</form>';
   echo '</div>';
     ?>
