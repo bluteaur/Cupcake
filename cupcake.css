@@ -10,10 +10,27 @@ body {
 }
 
 #LoginForm {
-  margin-top:30vh;
+  margin-top:2vmin;
   text-align: left;
   margin-left:35vw;
   font-size:1.4em;
+  font-color:black;
+}
+
+#indexHeader {
+  white-space:nowrap;
+  text-align:center;
+  font-color:black;
+}
+
+#indexHeader H1 {
+  font-size: 10vmin;
+}
+
+#indexContent {
+  margin-top: 13vmin;
+  text-align:center;
+  font-size:1em;
   font-color:black;
 }
 
@@ -30,6 +47,14 @@ body {
 }
 
 #padding {
+  white-space:nowrap;
   color:black;
 }
 
+/* PageNotFound.php */
+#PageNotFound {
+  margin-top:30vh;
+  text-align: center;
+  font-size:1.4em;
+  font-color:black;
+}
