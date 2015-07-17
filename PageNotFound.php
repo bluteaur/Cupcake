@@ -7,7 +7,7 @@
     <meta name="Cupcake Messaging" content="We don't sell your information. You have control.">
   </head>
   <body>
-    <div id="LoginForm">I think you don't belong here so.. Let me MEOW at you :3 
+    <div id="PageNotFound">I think you don't belong here so.. Let me MEOW at you :3 
     <a href="index.php">Click Here To Escape!</a>
     <?php
       echo '<br />';
