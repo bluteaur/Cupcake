@@ -174,6 +174,12 @@
     </script>
   </head>
   <body>
+    <div id="indexHeader">
+      <h1>Cupcake Messaging</h1>
+    </div>
+    <div id="indexContent">
+      Signup or Login!
+    </div>
     <?php
       /*code that'll display the login/signup stuff
               FORM:
@@ -186,22 +192,22 @@
   if($error === true)
      echo $errorMessage;
   echo '<form action="index.php" method="post" name="validate">';
-  echo '<input type="text" name="username" id="input"> ';
+  echo '<div id="padding"><input type="text" name="username" id="input"> ';
 if(!$UserNameMatch)
   echo '<span id="invalid">';
-else echo '<span id="padding">';
+else echo '<span>';
   echo 'Username';
 if(!$UserNameMatch)
   echo '*';
-  echo '</span><br />';
-  echo '<input type="password" name="password" autocomplete="off" id="input"> ';
+  echo '</span></div>';
+  echo '<div id="padding"><input type="password" name="password" autocomplete="off" id="input"> ';
 if(!$PasswordMatch)
   echo '<span id="invalid">';
 else echo '<span id="padding">';
   echo 'Password';
 if(!$PasswordMatch)
   echo '*';
-  echo '</span><br />';
+  echo '</span></div>';
   echo '<input type="submit" name="login" value="Login" id="button">';
   echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
   echo '</form>';
