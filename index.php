@@ -82,6 +82,10 @@
   $_SESSION['mobile'] = $isMobile;
   $_SESSION['bot'] = $isBot;
 }
+  if($_SESSION['bot']){
+    header('Location: PageNotFound.php');
+    exit;
+  }
   /* code that'll check isset($_POST['signup'])
                   add information to database (username + password)
                   check if everything is valid
@@ -297,6 +301,10 @@ if(!$PasswordMatch)
   echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
   echo '</form>';
   echo '</div>';
+  if($_SESSION['mobile'])
+    $type = "Mobile";
+  else $type = "Desktop";
+  echo '<div id="request"><a href="ChangeVersion.php">Request ' . $type . ' Version.</a></div>';
     ?>
   </body>
 </html>
