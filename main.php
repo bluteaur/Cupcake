@@ -8,8 +8,13 @@ if($_SESSION['login'] == false || !isset($_SESSION['login']) || $_SESSION['bot']
 <!doctype html>
 <html>
   <head>
-    <title>Cupcake Messaging Login</title>
-    <link rel="stylesheet" type="text/css" href="cupcake.css">
+    <title>Cupcake Messaging</title>
+    <?php
+    if($_SESSION['mobile'])
+       echo '<link rel="stylesheet" type="text/css" href="cupcakeMobile.css">';
+      else
+       echo '<link rel="stylesheet" type="text/css" href="cupcake.css">';
+    ?>
     <meta name="Cupcake Messaging" content="Your messaging site!">
     <meta name="Cupcake Messaging" content="We don't sell your information. You have control.">
   </head>
