@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['login'] == false || !isset($_SESSION['login'])){
+if($_SESSION['login'] == false || !isset($_SESSION['login']) || $_SESSION['bot']){
  header('Location: PageNotFound.php');
  exit;
 }
