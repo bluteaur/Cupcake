@@ -210,6 +210,7 @@
     exit;
   }
   
+  $_SESSION['lastPlace'] = 'index.php';
 ?>
 
 <!doctype html>
