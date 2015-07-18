@@ -17,5 +17,12 @@ if($_SESSION['login'] == false || !isset($_SESSION['login']) || $_SESSION['bot']
     <div id="LoginForm">Logout:
     <a href="logout.php">Click Here!</a>
     </div>
+    <?php
+    $_SESSION['lastPlace'] = 'main.php';
+    if($_SESSION['mobile'])
+      $type = "Mobile";
+    else $type = "Desktop";
+    echo '<div id="request"><a href="ChangeVersion.php">Request ' . $type . ' Version.</a></div>';
+    ?>
   </body>
 </html>
