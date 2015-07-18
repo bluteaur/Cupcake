@@ -303,8 +303,8 @@ if(!$PasswordMatch)
   echo '</form>';
   echo '</div>';
   if($_SESSION['mobile'])
-    $type = "Mobile";
-  else $type = "Desktop";
+    $type = "Desktop";
+  else $type = "Mobile";
   echo '<div id="request"><a href="ChangeVersion.php">Request ' . $type . ' Version.</a></div>';
     ?>
   </body>
