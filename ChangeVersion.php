@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['mobile'])){
+if(!isset($_SESSION['mobile']) || !isset($_SESSION['lastPlace'])){
    header('Location: PageNotFound.php');
    exit;
 }
