@@ -4,3 +4,13 @@ body {
   font-family: Helvetica, "Times New Roman";
   background-color: #AAAAFF;
 }
+
+#request {
+  margin-top:96vh;
+  text-align:right;
+  text-font:12px;
+}
+#request a {
+  text-decoration:none;
+  color:#FFFFFF;
+}
