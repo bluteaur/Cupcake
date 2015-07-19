@@ -95,11 +95,18 @@
   $UserNameMatch = true;
   $PasswordMatch = true;
   $error = false;
+  $errorMessage = 'Something went wrong.';
   if(isset($_POST['signup'])){
       //setting up database access
     try{
-      if($_SESSION['signup'] === true)
+      if($_SESSION['attempts'] > 20) {
+         $errorMessage = 'Too many attempts at logging in. Signup later.';
+         throw new Exception('Too many attempts at logging in. Signup later.');
+      }
+      if($_SESSION['signup'] === true){
+        $errorMessage = 'Already signed up, try again later.';
         throw new Exception('Already signed up, try again later.');
+      }
       $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'bluteaur_CUPCAKE', 'Sup3rS3cr3tPassword');
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -108,14 +115,18 @@
         //checking for invalid characters. Allowed: (letters, digits, dashes)
       $tempName = preg_replace('/[^A-Za-z0-9\-]/', '', $_POST['username']);
         //if a character got replaced than we'll throw an exception
-      if($tempName !== $_POST['username'])
+      if($tempName !== $_POST['username']){
+        $errorMessage = 'Invalid Username.';
         throw new Exception('Invalid Username.');
+      }
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
     	$value= $sql->fetchAll();
     	  //if we found a user with that username then throw exception
-    	if($value[0][1] === $_POST['username'])
+    	if($value[0][1] === $_POST['username']){
+          $errorMessage = 'Username Taken.';
     	  throw new Exception('Username Taken.');
+        }
     	    //here the user is safe to register
     	    //hashing + salting password
     	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
@@ -134,7 +145,7 @@
     }
     catch(Exception $e) {
       $error = true;
-      $errorMessage = $e->getMessage();
+      //$errorMessage = $e->getMessage();
       $con = null;
     }
   }
@@ -148,8 +159,10 @@
   if(($_SESSION['signup2'] === true || isset($_POST['login'])) && !$error){
     $_SESSION['login'] = false; $_SESSION['signup2'] = false;
     try{
-      if($_SESSION['attemps'] > 20)
+      if($_SESSION['attempts'] > 20){
+        $errorMessage = 'Too many attemps, try again later.';
         throw new Exception('Too many attemps, try again later.');
+      }
       $con = new PDO('mysql:host=localhost;dbname=bluteaur_CUPCAKE', 'bluteaur_CUPCAKE', 'Sup3rS3cr3tPassword');
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -158,21 +171,24 @@
       $tempName = preg_replace('/[^A-Za-z0-9\-]/', '', $_POST['username']);
         //if a character got replaced than we'll throw an exception
       if($tempName !== $_POST['username']){
-         $UserNameMatch = false;
+        $UserNameMatch = false;
+        $errorMessage = 'Invalid Username.';
         throw new Exception('Invalid Username.');
       }
       $sql->bindParam(':username', $tempName);
     	$sql->execute();
     	$value= $sql->fetchAll();
         if($value == null){
-            throw new Exception('Something went wrong.');
+            $errorMessage = 'Username or Password incorrect.';
+            throw new Exception('Username or Password incorrect.');
         }
     	$password = '%^&*!!!Hi' . $_POST['password'] . 'Are you a wizard?';
     	$password = hash('md5', $password);
     	if($password != $value[0][2] || $_POST['username'] != $value[0][1]){
     	  $UserNameMatch = false;
           $PasswordMatch = false;
-          throw new Exception('Invalid Login.');
+          $errorMessage = 'Username or Password incorrect.';
+          throw new Exception('Username or Password incorrect.');
     	}
       $UserNameMatch = true;
       $PasswordMatch = true;
@@ -190,12 +206,12 @@
       $_SESSION['login'] = false;
       $_SESSION['admin'] = false;
       $error = true;
-      $errorMessage = $e->getMessage();
+      //$errorMessage = $e->getMessage();
       $con = null;
       if(!isset($_SESSION['attempts']))
         $_SESSION['attempts'] = 0;
-      if($_SESSION['attemps'] <= 20)
-        $_SESSION['attemps']++;
+      if($_SESSION['attempts'] <= 20)
+        $_SESSION['attempts']++;
     }
   }
 ?>
@@ -280,9 +296,13 @@
       */
   echo '<div id="LoginForm">';
 if(!$_SESSION['mobile'])
-  echo '<img src="images/CupcakeLogo.jpeg" id="CupcakeLogo">';
-  if($error === true)
-     echo '<center>' .  $errorMessage . '</center>';
+  echo '<img src="images/CupcakeLogo.jpeg" id="CupcakeLogo"><br />';
+  if($error === true){
+     if($_SESSION['mobile'])
+       echo '<center>' .  $errorMessage . '</center>';
+     else
+       echo $errorMessage;
+  }
   echo '<form action="index.php" method="post" name="validate">';
 if($_SESSION['mobile'])
   $temp = ' placeholder="Username" ';
