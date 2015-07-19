@@ -17,6 +17,10 @@ body {
   font-color:black;
 }
 
+#CupcakeLogo {
+  margin-left:2vw;
+}
+
 #indexHeader {
   white-space:nowrap;
   text-align:center;
@@ -28,7 +32,7 @@ body {
 }
 
 #indexContent {
-  margin-top: 13vmin;
+  margin-top:13vh;
   text-align:center;
   font-size:1em;
   font-color:black;
@@ -52,7 +56,8 @@ body {
 }
 
 #request {
-  margin-top:50vh;
+  //margin-top:50vmin;
+  margin-top:20vmin; 
   text-align:right;
   text-font:12px;
 }
