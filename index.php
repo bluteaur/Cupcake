@@ -279,33 +279,45 @@
     FROM BUTTONS    $_POST['login']   or  $_POST['signup']
       */
   echo '<div id="LoginForm">';
+if(!$_SESSION['mobile'])
+  echo '<img src="images/CupcakeLogo.jpeg" id="CupcakeLogo">';
   if($error === true)
-     echo $errorMessage;
+     echo '<center>' .  $errorMessage . '</center>';
   echo '<form action="index.php" method="post" name="validate">';
-  echo '<div id="padding"><input type="text" name="username" id="input"> ';
-if(!$UserNameMatch)
-  echo '<span id="invalid">';
-else echo '<span>';
-  echo 'Username';
-if(!$UserNameMatch)
-  echo '*';
-  echo '</span></div>';
-  echo '<div id="padding"><input type="password" name="password" autocomplete="off" id="input"> ';
-if(!$PasswordMatch)
-  echo '<span id="invalid">';
-else echo '<span id="padding">';
-  echo 'Password';
-if(!$PasswordMatch)
-  echo '*';
-  echo '</span></div>';
+if($_SESSION['mobile'])
+  $temp = ' placeholder="Username" ';
+else $temp = ' ';
+  echo '<div id="padding"><input type="text" name="username"' . $temp . ' id="input"> ';
+if(!$_SESSION['mobile']){
+  if(!$UserNameMatch)
+    echo '<span id="invalid">';
+  else echo '<span>';
+    echo 'Username';
+  if(!$UserNameMatch)
+    echo '*';
+    echo '</span></div>';
+}
+if($_SESSION['mobile'])
+  $temp = ' placeholder="Password" ';
+else $temp = ' ';
+  echo '<div id="padding"><input type="password" name="password"' . $temp . ' autocomplete="off" id="input"> ';
+if(!$_SESSION['mobile']){
+  if(!$PasswordMatch)
+    echo '<span id="invalid">';
+  else echo '<span id="padding">';
+    echo 'Password';
+  if(!$PasswordMatch)
+    echo '*';
+    echo '</span></div>';
+} else echo '<br />';
   echo '<input type="submit" name="login" value="Login" id="button">';
-  echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()">';
+  echo '<input type="submit" name="signup" value="Signup" onclick="return validateForm()" id="buttons">';
   echo '</form>';
   echo '</div>';
   if($_SESSION['mobile'])
     $type = "Desktop";
   else $type = "Mobile";
-  echo '<div id="request"><a href="ChangeVersion.php">Request ' . $type . ' Version.</a></div>';
+  echo '<div id="request"><a href="ChangeVersion.php">Request ' . $type . ' Version. </a></div>';
     ?>
   </body>
 </html>
