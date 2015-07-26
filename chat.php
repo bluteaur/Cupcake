@@ -55,8 +55,8 @@ EOF;
                url: "MessageCenter.php",
                data: dataString,
                success: function(){
-                 var keep =  document.getElementById('chatbox').innerHTML;
-                 document.getElementById('chatbox').innerHTML = keep + addMessage;
+                 //var keep =  document.getElementById('chatbox').innerHTML;
+                 //document.getElementById('chatbox').innerHTML = keep + addMessage;
                  document.getElementById('message').innerHTML = "";
                }
            });
@@ -73,12 +73,13 @@ EOF;
       success: function(data)          //on recieve of reply
       {
         row++;
-        var id = data[0];              //get id
-        var message = data[1];         //get message
+        var message = data[0];         //get message
+        if(message == null || !isset(data[0]) || data[0] == ' ')
+           return;
         //--------------------------------------------------------------------
         // 3) Update html content
         //--------------------------------------------------------------------
-        $('#chatbox').append("<div id=innerChat<?php echo $_POST['id']; ?>>" + data[1] + "</div>"); //Set output element html
+        $('#chatbox').append("<div id=innerChat<?php echo $_POST['id']; ?>>" + data[0] + "</div>"); //Set output element html
         //recommend reading up on jquery selectors they are awesome 
         // http://api.jquery.com/category/selectors/
       } 
@@ -96,7 +97,7 @@ EOF;
        To be made.<br />
        <?php
          if($_SESSION['mobile']){
-            echo '<div id=chatbox><div id=innerChat'. $_POST['id'] .'>No chat yet.</div></div>';
+            echo '<div id=chatbox><div id=innerChat'. $_POST['id'] .'>Start of chat.</div></div>';
             echo <<<EOF
             <form action = "">
               <input type="submit" id="send" name="send">
