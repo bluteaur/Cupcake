@@ -62,6 +62,33 @@ EOF;
            });
         }
     }
+    var row = 0;
+    function myFunction()
+    {
+        $.ajax({                                      
+      url: 'getMessages.php',                  //the script to call to get data          
+      data: "id=<?php echo $_post['id']; ?>&row=" + row,    //you can insert url argumnets here to pass to api.php
+                                       //for example "id=5&parent=6"
+      dataType: 'json',                //data format      
+      success: function(data)          //on recieve of reply
+      {
+        row++;
+        var id = data[0];              //get id
+        var message = data[1];         //get message
+        //--------------------------------------------------------------------
+        // 3) Update html content
+        //--------------------------------------------------------------------
+        $('#chatbox').append("<div id=innerChat<?php echo $_POST['id']; ?>>" + data[1] + "</div>"); //Set output element html
+        //recommend reading up on jquery selectors they are awesome 
+        // http://api.jquery.com/category/selectors/
+      } 
+    });
+  }); 
+
+        setTimeout(myFunction, 3000);
+    }
+
+    myFunction();
   </script>
   </head>
   <body>
@@ -69,9 +96,9 @@ EOF;
        To be made.<br />
        <?php
          if($_SESSION['mobile']){
-            echo '<div id=chatbox><div id=innerChat'. $_POST['id'] .'>NoChatYet</div></div>';
+            echo '<div id=chatbox><div id=innerChat'. $_POST['id'] .'>No chat yet.</div></div>';
             echo <<<EOF
-            <form>
+            <form action = "">
               <input type="submit" id="send" name="send">
 EOF;
 echo '              <input type="hidden" name="to" value="'. $_POST['id'] .'">\n';
