@@ -13,7 +13,7 @@ if(!is_numeric($_GET['row']) || !is_numeric($_GET['id']) || !isset($_GET['row'])
         //error handeling mode to exception handeling
       $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //getting all users with that username
-      $sql = $con->prepare("SELECT message FROM chats WHERE id = :id and friend = :friend LIMIT :row , 1");
+      $sql = $con->prepare("SELECT message FROM chats WHERE (id = :id and friend = :friend) or (id = :friend and friend = :id) LIMIT :row , 1");
       $sql->bindParam(':id', $_SESSION['id']);
       $sql->bindParam(':friend', $_GET['id']);
       $sql->bindParam(':row', $_GET['row']);
